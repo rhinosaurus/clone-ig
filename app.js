@@ -2,7 +2,7 @@ const express = require('express');
 const ws = require('ws');
 
 const app = express();
-const port = 3000;
+const port = $PORT || 3000;
 
 app.use(express.static('public'));
 
