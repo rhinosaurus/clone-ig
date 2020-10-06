@@ -1,0 +1,19 @@
+{
+  "name": "rtc",
+  "version": "1.0.0",
+  "description": "WebRTC playground",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webrtc",
+    "rtc"
+  ],
+  "author": "Brandon Ryall-Ortiz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ws": "^7.3.1"
+  }
+}

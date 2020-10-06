@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>WebRTC Playground</title>
+    <style>
+      body {
+        font-family: helvetica, arial;
+      }
+
+      #videos {
+        display: flex;
+      }
+
+      #videos > div {
+        flex: 1;
+        margin: 10px;
+      }
+    </style>
+
+    <script>
+      let filters = {};
+      function slided(item) {
+        filters[item.id] = {
+          value: item.value,
+          percentage: item.getAttribute('percentage') ? true : false,
+          deg: item.getAttribute('rotate') ? true : false
+        };
+        const output = Object.keys(filters).reduce((out, item) => (`${out} ${item}(${filters[item].value}${filters[item].percentage ? '%' : filters[item].deg ? 'deg' : 'px'})`), "");
+        const el = document.getElementById('local');
+        el.style.webkitFilter = output;
+        el.style.filter = output;
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <h1>IG Copy</h1>
+
+    <div id="videos">
+      <div>
+      <video id="local" autoplay playsinline></video>
+      </div>
+      <div class="sliders">
+        <div>
+          <label for="blur">Blur</label>
+          <input type="range" min="1" max="100" value="0" class="slider" id="blur" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="brightness">Brightness</label>
+          <input type="range" min="1" max="1000" value="100" class="slider" id="brightness" percentage="1" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="contrast">Contrast</label>
+          <input type="range" min="1" max="1000" value="100" class="slider" id="contrast" percentage="1" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="grayscale">Grayscale</label>
+          <input type="range" min="1" max="100" value="0" class="slider" id="grayscale" percentage="1" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="hue">Hue</label>
+          <input type="range" min="1" max="360" value="0" class="slider" id="hue-rotate" rotate="1" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="invert">Invert</label>
+          <input type="range" min="1" max="100" value="0" class="slider" id="invert" percentage="1" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="opacity">Opacity</label>
+          <input type="range" min="1" max="100" value="100" class="slider" id="opacity" percentage="1" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="saturate">Saturate</label>
+          <input type="range" min="1" max="100" value="100" class="slider" id="saturate" percentage="1" onchange="slided(this)">
+        </div>
+        <div>
+          <label for="sepia">Sepia</label>
+          <input type="range" min="1" max="100" value="0" class="slider" id="sepia" percentage="1" onchange="slided(this)">
+        </div>
+      </div>
+    </div>
+
+    <script src="js/stream.js"></script>
+  </body>
+</html>
