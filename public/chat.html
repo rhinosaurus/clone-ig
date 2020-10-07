@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>Websocket Chat</title>
+    <style>
+      body {
+        font-family: helvetica, arial;
+      }
+
+      .output {
+        width: 500px;
+        height: 300px;
+        border: 1px solid black;
+        overflow: scroll;
+      }
+    </style>
+
+    <script>
+      let ws;
+      (() => {
+        const person = prompt("Please enter your name", Date.now());
+        window.person = person || Date.now();
+        ws = new WebSocket(`wss://${document.location.host}`);
+        ws.onmessage = (msg) => {
+          const rec = JSON.parse(msg.data);
+          const el = document.querySelector('.output');
+          el.innerHTML = `<div><strong>${rec.person}:</strong> ${rec.message}</div>` + el.innerHTML;
+        };
+      })();
+
+      const sendMsg = () => {
+        const msg = document.getElementById('message').value;
+        ws.send(JSON.stringify({ person: person, message: msg}));
+        document.getElementById('message').value = '';
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Chat</h1>
+    <div class="chat">
+      <div class="output">
+      </div>
+      <input type="text" id="message" /><button onclick="sendMsg(this)">Send</button>
+    </div>
+  </body>
+</html>

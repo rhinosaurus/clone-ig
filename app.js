@@ -8,8 +8,13 @@ app.use(express.static('public'));
 
 const websock = new ws.Server({ noServer: true });
 websock.on('connection', socket => {
-  socket.send('connected');
-  socket.on('message', message => console.log(message));
+  socket.on('message', message => {
+    websock.clients.forEach(client => {
+      if (client.readyState === ws.OPEN) {
+        client.send(message);
+      }
+    });
+  });
 });
 
 const server = app.listen(port, () => {
